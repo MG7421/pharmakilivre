@@ -18,16 +18,14 @@ class OnboardingScreenOne extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image(
-                  width: size.width,
-                  height: size.height * 0.6,
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/images/onboard1.png'),
+                Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: AvatarOnboard(size: size, title: 'assets/images/slide1.webp'),
                 ),
                 ClipPath(
                   clipper: SlandingClipper(),
                   child: Container(
-                    height: size.height * 0.4,
+                    height: size.height * 0.42,
                     color: yellow,
                   ),
                 )
@@ -144,6 +142,29 @@ class OnboardingScreenOne extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AvatarOnboard extends StatelessWidget {
+  const AvatarOnboard({
+    required this.size,
+    required this.title
+  });
+
+  final Size size;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(size.width/2), // Divise la largeur/hauteur par 2 pour obtenir un cercle parfait
+      child: Image(
+        width: size.width - 20,
+        height: size.width - 20,
+        fit: BoxFit.cover,
+        image: AssetImage(title),
       ),
     );
   }

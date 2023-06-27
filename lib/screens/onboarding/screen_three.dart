@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmakilivre/screens/onboarding/screen_one.dart';
 import 'dart:math' as math;
 
 import '../../config/constants/constants.dart';
@@ -16,11 +17,9 @@ class OnboardingScreenThree extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image(
-                  width: size.width,
-                  height: size.height * 0.6,
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/images/onboard3.png'),
+                Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: AvatarOnboard(size: size, title: 'assets/images/slide3.webp'),
                 ),
                 Transform(
                   alignment: Alignment.center,
