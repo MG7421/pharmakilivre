@@ -22,7 +22,7 @@ class OnboardingScreenOne extends StatelessWidget {
                   width: size.width,
                   height: size.height * 0.6,
                   fit: BoxFit.cover,
-                  image: AssetImage('assets/images/onboard1.png'),
+                  image: AssetImage('assets/images/slider1.png'),
                 ),
                 ClipPath(
                   clipper: SlandingClipper(),

@@ -30,7 +30,7 @@ class OnboardingScreenTwo extends StatelessWidget {
                   width: size.width,
                   height: size.height * 0.6,
                   fit: BoxFit.cover,
-                  image: AssetImage('assets/images/onboard2.png'),
+                  image: AssetImage('assets/images/slider2.png'),
                 ),
               ],
             ),
@@ -128,7 +128,9 @@ class OnboardingScreenTwo extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => OnboardingScreenThree(),
+                            builder: (_) => OnboardingScreenThree(
+
+                            ),
                           ),
                         );
                       },
