@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dropdown_alert/alert_controller.dart';
+import 'package:flutter_dropdown_alert/model/data_alert.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pharmakilivre/config/constants/constants.dart';
 import 'package:pharmakilivre/screens/home/forgot_password_screen.dart';
@@ -166,6 +168,8 @@ class _LoginPageState extends State<LoginPage> {
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
 
+
+
     return Scaffold(
       body: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
@@ -177,12 +181,20 @@ class _LoginPageState extends State<LoginPage> {
             ),
             );
           } else if (state is LoginFailure) {
-            return Center(child: Text(state.error));
+            return AlertController.show("Erreur", "Email ou Mot de passe incorrect", TypeAlert.error);
           } else if (state is LoginSuccess) {
             final response = state.response;
 
-            return Center(child: Text(
-                'Logged in successfully! Token: ${response.token}'));
+                if (response.code == 200){
+                   AlertController.show("Connexion reussie", "Bienvenu ${response.nom}", TypeAlert.success);
+                  return Center(child: Text(
+                      'Logged in successfully! Token: ${response.token}'));
+                }
+                else{
+                  return AlertController.show("Erreur", "Email ou Mot de passe incorrect", TypeAlert.error);
+                }
+
+
           } else {
             return Container(
               height: height,
