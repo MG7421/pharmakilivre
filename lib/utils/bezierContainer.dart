@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:pharmakilivre/config/constants/constants.dart';
 
 import 'customClipper.dart';
 
@@ -17,11 +18,11 @@ class BezierContainer extends StatelessWidget {
         child: Container(
           height: MediaQuery.of(context).size.height *.5,
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Color(0xff084051),Color(0xff084051)]
+                colors: [AppColors.primaryColor, AppColors.primaryColor]
               )
             ),
         ),

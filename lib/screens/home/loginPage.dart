@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:pharmakilivre/config/constants/constants.dart';
 import 'package:pharmakilivre/screens/home/forgot_password_screen.dart';
-import 'package:pharmakilivre/screens/home/signup.dart';
 import 'package:pharmakilivre/utils/bezierContainer.dart';
+
+import '../../bloc/LoginBloc.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -14,26 +18,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Retour',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
+
 
   Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
@@ -65,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
       padding: EdgeInsets.symmetric(vertical: 15),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.grey.shade200,
@@ -76,10 +61,12 @@ class _LoginPageState extends State<LoginPage> {
           gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [Color(0xff084051), Color(0xff084051)])),
+              colors: [AppColors.primaryColor , AppColors.primaryColor])),
       child: Text(
         'Connexion',
-        style: TextStyle(fontSize: 20, color: Colors.white),
+        style: TextStyle(fontSize: 20,
+            fontFamily: 'Quicksand',
+            color: Colors.white),
       ),
     );
   }
@@ -128,157 +115,167 @@ class _LoginPageState extends State<LoginPage> {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff1959a9),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    topLeft: Radius.circular(5)),
-              ),
+            child:Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(vertical: 15),
               alignment: Alignment.center,
-              child: Text('f',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
               decoration: BoxDecoration(
-                color: Color(0xff2872ba),
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(5),
-                    topRight: Radius.circular(5)),
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: Colors.grey.shade200,
+                        offset: Offset(2, 4),
+                        blurRadius: 5,
+                        spreadRadius: 2)
+                  ],
+                  gradient: const LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [AppColors.btnColor, AppColors.btnColor])
               ),
-              alignment: Alignment.center,
-              child: Text('Se connecter avec Facebook',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
+              child: Text(
+                "inscription",
+                style: TextStyle(fontSize: 20,
+                    fontFamily: 'Quicksand',
+                    color: Colors.white),
+              ),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _createAccountLabel() {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPage()));
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
-        padding: EdgeInsets.all(15),
-        alignment: Alignment.bottomCenter,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Vous n\'avez pas de compte ?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(
-              "S'inscrire",
-              style: TextStyle(
-                  color: Color(0xff084051),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
       ),
     );
   }
 
   Widget _title() {
-    return Column(
-      children: [
-        //SizedBox(height: 30,),
-         const Text('Bienvenue', style: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.w400,
-            color: Color(0xff084051)
-        ),
-        ),
-        const Text(
-          "Connectez-vous avec votre email et votre mot de passe pour accéder à votre compte. ",
-          textAlign: TextAlign.center, style: TextStyle(
-          fontSize: 10,
-        ) ,
-        ),
-      ],
+    return Container(
+      width: 150,
+      child: Column(
+        children: [
+          Image(image: AssetImage('assets/images/favicon.png'))
+        ],
+      ),
     );
   }
 
-  Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField("Entrez votre adresse e-mail"),
-        _entryField("Entrez votre mot de passe", isPassword: true),
-      ],
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final LoginBloc loginBloc = BlocProvider.of<LoginBloc>(context);
+    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+
     return Scaffold(
-        body: Container(
-      height: height,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-              top: -height * .15,
-              right: -MediaQuery.of(context).size.width * .4,
-              child: BezierContainer()),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: BlocBuilder<LoginBloc, LoginState>(
+        builder: (context, state) {
+          if (state is LoginLoading) {
+            return Center(child:
+              LoadingAnimationWidget.halfTriangleDot(
+              color: AppColors.primaryColor,
+              size: 80,
+            ),
+            );
+          } else if (state is LoginFailure) {
+            return Center(child: Text(state.error));
+          } else if (state is LoginSuccess) {
+            final response = state.response;
+
+            return Center(child: Text(
+                'Logged in successfully! Token: ${response.token}'));
+          } else {
+            return Container(
+              height: height,
+              child: Stack(
                 children: <Widget>[
-                  SizedBox(height: height * .2),
-                  _title(),
-                  SizedBox(height: 50),
-                  _emailPasswordWidget(),
-                  SizedBox(height: 20),
-                  _submitButton(),
+                  Positioned(
+                      top: -height * .15,
+                      right: -MediaQuery
+                          .of(context)
+                          .size
+                          .width * .4,
+                      child: BezierContainer()),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(height: height * .2),
+                          _title(),
+                          SizedBox(height: 20),
+                       Column(
+                    children: <Widget>[
+                    // _entryField("Entrez votre adresse e-mail"),
+                    //  _entryField("Entrez votre mot de passe", isPassword: true),
 
-                  // botton
-
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    alignment: Alignment.centerRight,
-                    child: Text('Mot de passe oublié ?',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500)),
+                    TextField(
+                      controller: _emailController,
+                       decoration: InputDecoration(
+                      labelText: "Entrez votre adresse e-mail",
+                      labelStyle: TextStyle(fontSize: 16, fontFamily: 'Quicksand',
+                    ),
+                    // Ajoutez ici d'autres styles personnalisés pour le champ
                   ),
-                ),
-                  _divider(),
-                  _facebookButton(),
-                  SizedBox(height: height * .055),
-                  _createAccountLabel(),
+            ),
+          SizedBox(height: 16), // Espacement vertical entre les champs
+          TextField(
+            controller: _passwordController,
+          obscureText: true, // Pour masquer le texte du mot de passe
+          decoration: InputDecoration(
+          labelText: "Entrez votre mot de passe",
+          labelStyle: TextStyle(fontSize: 16, fontFamily: 'Quicksand',
+          ),
+          // Ajoutez ici d'autres styles personnalisés pour le champ
+          ),
+          ),
+
+          ],
+          ),
+                          SizedBox(height: 35),
+                          InkWell(
+                            onTap: (){
+                              final email = _emailController.text;
+                              final password = _passwordController.text;
+                              context.read<LoginBloc>().add(LoginButtonPressed(email, password));
+                            },
+                              child: _submitButton()),
+
+
+                          // botton
+
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context, MaterialPageRoute(
+                                  builder: (context) =>
+                                      ForgotPasswordScreen()));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              alignment: Alignment.centerRight,
+                              child: Text('Mot de passe oublié ?',
+                                  style: TextStyle(
+                                      fontFamily: 'Quicksand',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500)),
+                            ),
+                          ),
+                          _divider(),
+                          _facebookButton(),
+                          SizedBox(height: height * .055),
+                          // _createAccountLabel(),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ),
-          Positioned(top: 40, left: 0, child: _backButton()),
-        ],
+            );
+          }
+        },
       ),
-    ));
+    );
   }
 }

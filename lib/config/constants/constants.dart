@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-//colors used in this app
-const Color white = Colors.white;
-const Color black = Colors.black;
-const Color yellow = Color(0xFF36AA05);
-
-//default app padding
-const double appPadding = 20.0;
+class AppColors {
+  static const Color primaryColor = Color(0xFF36AA05);
+  static const Color accentColor = Color(0xFF123456);
+  static const Color textColor = Color(0xFF000000);
+  static const Color btnColor = Color(0xFF000000);
+  static const Color backgroundColor = Color(0xFFFFFFFF);
+}

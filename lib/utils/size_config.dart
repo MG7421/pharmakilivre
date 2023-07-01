@@ -16,6 +16,7 @@ class SizeConfig {
     orientation = _mediaQueryData.orientation;
     blockH = screenHeight / 100;
     blockV = screenWidth / 100;
+
   }
 }
 
