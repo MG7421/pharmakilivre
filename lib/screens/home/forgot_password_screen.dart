@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pharmakilivre/screens/home/signup.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:pharmakilivre/config/constants/constants.dart';
+import 'package:pharmakilivre/screens/home/loginPage.dart';
 import 'package:pharmakilivre/utils/bezierContainer.dart';
+
 
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -12,57 +15,29 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget _backButton() {
-    return InkWell(
+    return
+
+      InkWell(
       onTap: () {
         Navigator.pop(context);
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Retour',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-          ],
+          children: [],
         ),
       ),
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          TextField(
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
-        ],
-      ),
-    );
-  }
 
   Widget _submitButton() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
+      padding: EdgeInsets.symmetric(vertical: 18, horizontal: 30),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: const BorderRadius.all(Radius.circular(30)),
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.grey.shade200,
@@ -73,100 +48,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [Color(0xff084051), Color(0xff084051)])),
+              colors: [AppColors.primaryColor , AppColors.primaryColor])),
       child: Text(
         'Connexion',
-        style: TextStyle(fontSize: 20, color: Colors.white),
+        style: TextStyle(fontSize: 20,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.w600,
+            color: Colors.white),
       ),
     );
   }
 
-  Widget _divider() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          Text('or'),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _facebookButton() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff1959a9),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    topLeft: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('f',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff2872ba),
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(5),
-                    topRight: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('Se connecter avec Facebook',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _createAccountLabel() {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPage()));
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20),
@@ -177,7 +75,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           children: <Widget>[
             Text(
               'Vous avez déjà un compte ?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 13,
+                  fontFamily: 'Quicksand',
+                  fontWeight: FontWeight.w600),
             ),
             SizedBox(
               width: 5,
@@ -185,7 +85,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             Text(
               "Connexion",
               style: TextStyle(
-                  color: Color(0xff084051),
+                  color: AppColors.primaryColor,
+                  fontFamily: 'Quicksand',
                   fontSize: 13,
                   fontWeight: FontWeight.w600),
             ),
@@ -198,10 +99,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget _title() {
     return Column(
       children: [
-        //SizedBox(height: 30,),
-        const Text('Mot de passe oublié', style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.w400,
+        SizedBox(height: 60,),
+        const Text('Mot de passe oublié',
+          style: TextStyle(
+              fontFamily: 'Quicksand',
+              fontSize: 30,
+              fontWeight: FontWeight.w600,
             color: Color(0xff084051)
         ),
         ),
@@ -210,13 +113,36 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField("Entrez votre adresse e-mail"),
-       // _entryField("Entrez votre mot de passe", isPassword: true),
-      ],
-    );
+    return Form(
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: "Email",
+                hintText: "Enter votre email",
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      0, 20,20,20
+                  ),
+                  child: SvgPicture.asset("assets/icons/Mail.svg", height: 18),
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 18),
+                enabledBorder: outlineInputBorder(
+                  borderRadius: BorderRadius.circular(28),
+                  borderSide: BorderSide(color: kTextColor),
+                ),
+                focusedBorder: outlineInputBorder(
+                  borderRadius: BorderRadius.circular(28),
+                  borderSide: BorderSide(color: kTextColor),
+                ),
+              ),
+            ),
+          ],
+        ) );
+
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -237,15 +163,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: height * .2),
+                      SizedBox(height: height * .3),
                       _title(),
                       SizedBox(height: 50),
                       _emailPasswordWidget(),
-                      SizedBox(height: 20),
+                      SizedBox(height: 50),
                       _submitButton(),
                       SizedBox(height: 20),
-                      _divider(),
-                      _facebookButton(),
                       SizedBox(height: height * .055),
                       _createAccountLabel(),
                     ],

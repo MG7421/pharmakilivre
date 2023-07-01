@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pharmakilivre/models/LoginResponse.dart';
-import 'package:pharmakilivre/utils/configApi/configApi.dart';
 
 class ApiService {
   Future<LoginResponse> postLogin(String url, {required Map<String, dynamic> body}) async {

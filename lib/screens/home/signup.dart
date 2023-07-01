@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pharmakilivre/config/constants/constants.dart';
 import 'package:pharmakilivre/screens/home/loginPage.dart';
 import 'package:pharmakilivre/utils/bezierContainer.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({Key ?key, this.title}) : super(key: key);
+  const SignUpPage({Key ?key, this.title}) : super(key: key);
 
   final String? title;
 
@@ -21,12 +23,15 @@ class _SignUpPageState extends State<SignUpPage> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Retour',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+            // Container(
+            //   padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+            //   child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+            // ),
+            // Text('Retour',
+            //     style: TextStyle(fontSize: 12,
+            //         fontWeight: FontWeight.w700,
+            //       fontFamily: 'Quicksand',
+            //     ))
           ],
         ),
       ),
@@ -60,10 +65,10 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _submitButton() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
+      padding: EdgeInsets.symmetric(vertical: 18),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.grey.shade200,
@@ -74,10 +79,13 @@ class _SignUpPageState extends State<SignUpPage> {
           gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [Color(0xff084051), Color(0xff084051)])),
+              colors: [AppColors.primaryColor , AppColors.primaryColor])),
       child: Text(
-        "S'inscrire Maintenant",
-        style: TextStyle(fontSize: 20, color: Colors.white),
+        "Créer un Compte",
+        style: TextStyle(fontSize: 20,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.w600,
+            color: Colors.white),
       ),
     );
   }
@@ -97,7 +105,9 @@ class _SignUpPageState extends State<SignUpPage> {
           children: <Widget>[
             Text(
               'Vous avez déjà un compte ?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 13,
+                  fontFamily: 'Quicksand',
+                  fontWeight: FontWeight.w900),
             ),
             SizedBox(
               width: 10,
@@ -105,9 +115,10 @@ class _SignUpPageState extends State<SignUpPage> {
             Text(
               'Connexion',
               style: TextStyle(
-                  color: Color(0xff084051),
+                  color:AppColors.primaryColor,
                   fontSize: 13,
-                  fontWeight: FontWeight.w600),
+                  fontFamily: 'Quicksand',
+                  fontWeight: FontWeight.w900),
             ),
           ],
         ),
@@ -116,25 +127,88 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'Inscrivez-Vous',
-          style: TextStyle(
-              fontSize: 35,
-              fontWeight: FontWeight.w400,
-              color: Color(0xff084051)
-          ),
+    return Container(
+      width: 150,
+      child: Column(
+        children: [
+          Image(image: AssetImage('assets/images/favicon.png'))
+        ],
       ),
     );
   }
 
   Widget _emailPasswordWidget() {
     return Column(
-      children: <Widget>[
-        _entryField("Nom d'utilisateur"),
-        _entryField("Entrez votre adresse e-mail"),
-        _entryField("Entrez votre mot de passe", isPassword: true),
+      children: [
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: "Nom d’utilisateur",
+            hintText: "Enter votre Nom d’utilisateur",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            suffixIcon: Padding(
+              padding: EdgeInsets.fromLTRB(
+                  0, 20,20,20
+              ),
+              child: SvgPicture.asset("assets/icons/User.svg", height: 18),
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 18),
+            enabledBorder: outlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(color: kTextColor),
+            ),
+            focusedBorder: outlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(color: kTextColor),
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: "Email",
+            hintText: "Enter votre email",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            suffixIcon: Padding(
+              padding: EdgeInsets.fromLTRB(
+                  0, 20,20,20
+              ),
+              child: SvgPicture.asset("assets/icons/Mail.svg", height: 18),
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 18),
+            enabledBorder: outlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(color: kTextColor),
+            ),
+            focusedBorder: outlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(color: kTextColor),
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: "Mot de passe",
+            hintText: "Enter votre Mot de passe",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            suffixIcon: Padding(
+              padding: EdgeInsets.fromLTRB(
+                  0, 20,20,20
+              ),
+              child: SvgPicture.asset("assets/icons/Lock.svg", height: 18),
+            ),
+
+            contentPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 18),
+            enabledBorder: outlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(color: kTextColor),
+            ),
+            focusedBorder: outlineInputBorder(
+              borderRadius: BorderRadius.circular(28),
+              borderSide: BorderSide(color: kTextColor),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -166,10 +240,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     _emailPasswordWidget(),
                     SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     _submitButton(),
-                    SizedBox(height: height * .14),
+                    SizedBox(height: height * .10),
                     _loginAccountLabel(),
                   ],
                 ),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dropdown_alert/alert_controller.dart';
+import 'package:flutter_dropdown_alert/model/data_alert.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pharmakilivre/config/constants/constants.dart';
+import 'package:pharmakilivre/screens/home/dashboard_screen.dart';
 import 'package:pharmakilivre/screens/home/forgot_password_screen.dart';
 import 'package:pharmakilivre/utils/bezierContainer.dart';
-
 import '../../bloc/LoginBloc.dart';
 
 
@@ -47,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _submitButton() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
+      padding: EdgeInsets.symmetric(vertical: 18),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -66,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
         'Connexion',
         style: TextStyle(fontSize: 20,
             fontFamily: 'Quicksand',
+            fontWeight: FontWeight.w700,
             color: Colors.white),
       ),
     );
@@ -105,43 +109,50 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _facebookButton() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child:Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(vertical: 15),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Colors.grey.shade200,
-                        offset: Offset(2, 4),
-                        blurRadius: 5,
-                        spreadRadius: 2)
-                  ],
-                  gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [AppColors.btnColor, AppColors.btnColor])
-              ),
-              child: Text(
-                "inscription",
-                style: TextStyle(fontSize: 20,
-                    fontFamily: 'Quicksand',
-                    color: Colors.white),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => DashboardScreen()));
+      },
+      child: Container(
+        height:  100,
+        padding: EdgeInsets.symmetric(vertical: 18),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child:Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(vertical: 0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.grey.shade200,
+                          offset: Offset(2, 4),
+                          blurRadius: 5,
+                          spreadRadius: 2)
+                    ],
+                    gradient: const LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [AppColors.btnColor, AppColors.btnColor])
+                ),
+                child: Text(
+                  "inscription",
+                      style: TextStyle(fontSize: 20,
+                      fontFamily: 'Quicksand',
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -166,6 +177,8 @@ class _LoginPageState extends State<LoginPage> {
     final TextEditingController _emailController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
 
+
+
     return Scaffold(
       body: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
@@ -177,23 +190,26 @@ class _LoginPageState extends State<LoginPage> {
             ),
             );
           } else if (state is LoginFailure) {
-            return Center(child: Text(state.error));
+            return AlertController.show("Erreur", "Email ou Mot de passe incorrect", TypeAlert.error);
           } else if (state is LoginSuccess) {
             final response = state.response;
 
-            return Center(child: Text(
-                'Logged in successfully! Token: ${response.token}'));
+                if (response.code == 200){
+                   AlertController.show("Connexion reussie", "Bienvenu ${response.nom}", TypeAlert.success);
+                  return Center(child: Text(
+                      'Logged in successfully! Token: ${response.token}'));
+                }
+                else{
+                  return AlertController.show("Erreur", "Email ou Mot de passe incorrect", TypeAlert.error);
+                }
+
+
           } else {
             return Container(
               height: height,
               child: Stack(
                 children: <Widget>[
-                  Positioned(
-                      top: -height * .15,
-                      right: -MediaQuery
-                          .of(context)
-                          .size
-                          .width * .4,
+                  Positioned(top: -height * .15, right: -MediaQuery.of(context).size.width * .4,
                       child: BezierContainer()),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
@@ -204,35 +220,57 @@ class _LoginPageState extends State<LoginPage> {
                         children: <Widget>[
                           SizedBox(height: height * .2),
                           _title(),
-                          SizedBox(height: 20),
-                       Column(
-                    children: <Widget>[
-                    // _entryField("Entrez votre adresse e-mail"),
-                    //  _entryField("Entrez votre mot de passe", isPassword: true),
+                           SizedBox(height: 20),
+                           Column(
+                             children: [
+                               TextFormField(
+                                 decoration: InputDecoration(
+                                   labelText: "Email",
+                                   hintText: "Enter votre email",
+                                   floatingLabelBehavior: FloatingLabelBehavior.always,
+                                   suffixIcon: Padding(
+                                     padding: EdgeInsets.fromLTRB(
+                                         0, 20,20,20
+                                     ),
+                                     child: SvgPicture.asset("assets/icons/Mail.svg", height: 18),
+                                   ),
+                                   contentPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 18),
+                                   enabledBorder: outlineInputBorder(
+                                     borderRadius: BorderRadius.circular(28),
+                                     borderSide: BorderSide(color: kTextColor),
+                                   ),
+                                   focusedBorder: outlineInputBorder(
+                                     borderRadius: BorderRadius.circular(28),
+                                     borderSide: BorderSide(color: kTextColor),
+                                   ),
+                                 ),
+                               ),
+                               SizedBox(height: 30),
+                               TextFormField(
+                                 decoration: InputDecoration(
+                                   labelText: "Mot de passe",
+                                   hintText: "Enter votre Mot de passe",
+                                   floatingLabelBehavior: FloatingLabelBehavior.always,
+                                   suffixIcon: Padding(
+                                     padding: EdgeInsets.fromLTRB(
+                                       0, 20,20,20
+                                     ),
+                                     child: SvgPicture.asset("assets/icons/Lock.svg", height: 18),
+                                   ),
 
-                    TextField(
-                      controller: _emailController,
-                       decoration: InputDecoration(
-                      labelText: "Entrez votre adresse e-mail",
-                      labelStyle: TextStyle(fontSize: 16, fontFamily: 'Quicksand',
-                    ),
-                    // Ajoutez ici d'autres styles personnalisés pour le champ
-                  ),
-            ),
-          SizedBox(height: 16), // Espacement vertical entre les champs
-          TextField(
-            controller: _passwordController,
-          obscureText: true, // Pour masquer le texte du mot de passe
-          decoration: InputDecoration(
-          labelText: "Entrez votre mot de passe",
-          labelStyle: TextStyle(fontSize: 16, fontFamily: 'Quicksand',
-          ),
-          // Ajoutez ici d'autres styles personnalisés pour le champ
-          ),
-          ),
-
-          ],
-          ),
+                                   contentPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 18),
+                                   enabledBorder: outlineInputBorder(
+                                     borderRadius: BorderRadius.circular(28),
+                                     borderSide: BorderSide(color: kTextColor),
+                                   ),
+                                   focusedBorder: outlineInputBorder(
+                                     borderRadius: BorderRadius.circular(28),
+                                     borderSide: BorderSide(color: kTextColor),
+                                   ),
+                                 ),
+                               ),
+                             ],
+                           ),
                           SizedBox(height: 35),
                           InkWell(
                             onTap: (){
@@ -241,10 +279,8 @@ class _LoginPageState extends State<LoginPage> {
                               context.read<LoginBloc>().add(LoginButtonPressed(email, password));
                             },
                               child: _submitButton()),
-
-
                           // botton
-
+                          SizedBox(height: 14),
                           InkWell(
                             onTap: () {
                               Navigator.push(
@@ -259,7 +295,7 @@ class _LoginPageState extends State<LoginPage> {
                                   style: TextStyle(
                                       fontFamily: 'Quicksand',
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w500)),
+                                      fontWeight: FontWeight.w700)),
                             ),
                           ),
                           _divider(),
@@ -279,3 +315,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+
+

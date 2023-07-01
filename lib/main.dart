@@ -22,9 +22,10 @@ class MyApp extends StatelessWidget {
         title: 'Pharmakilivre',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primaryColor: Color(0xFF36AA05),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+
         home: OnboardingExample(),
       )
     );

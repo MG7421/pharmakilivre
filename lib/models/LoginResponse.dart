@@ -1,13 +1,13 @@
 
 
 class LoginResponse {
-  final String token;
-  final int code;
-  final String email;
-  final String nom;
-  final String prenom;
-  final List<String> role;
-  final String message;
+  final String? token;
+  final int? code;
+  final String? email;
+  final String? nom;
+  final String? prenom;
+  final List<String?> role;
+  final String? message;
 
   LoginResponse({
     required this.token,
