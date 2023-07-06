@@ -161,7 +161,11 @@ class _Description extends StatelessWidget {
         page.description ?? '',
         style: TextStyle(
           color: page.textColor,
+<<<<<<< HEAD
           fontWeight: FontWeight.w500,
+=======
+          fontWeight: FontWeight.normal,
+>>>>>>> origin/devMaster
           fontFamily: 'Quicksand',
           letterSpacing: 0.0,
           fontSize: 16,
