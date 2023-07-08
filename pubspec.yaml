@@ -45,7 +45,9 @@ dependencies:
   provider: ^6.0.5
   flutter_svg: ^2.0.7
   image_network: ^2.5.4+1
-  camera: ^0.10.5+2
+  shared_preferences: ^2.2.0
+  dot_navigation_bar: any
+  path: ^1.8.3
   webview_flutter_wkwebview: '3.5.0'
 
 

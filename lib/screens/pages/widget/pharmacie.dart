@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:pharmakilivre/config/constants/constants.dart';
-import 'package:pharmakilivre/screens/home/dashboard_screen.dart';
+
+import '../../../constants.dart';
+import '../../../utils/coustom_bottom_nav_bar.dart';
+import '../dashboard.dart';
 
 class PharmacyPage extends StatelessWidget {
-  @override
+
+  static String routeName = "/pharmacie";
+
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppColors.backgroundColor,
+        backgroundColor: Colors.white,
         title: Text('Pharmacies de garde', style: TextStyle(
-        color:AppColors.textColor
+        color:AppColors.kTextColor
     ),
     ),
         leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: AppColors.textColor,),
+        icon: Icon(Icons.arrow_back, color: Colors.black,),
         onPressed: () {
            Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen()));
          },
@@ -26,7 +31,6 @@ class PharmacyPage extends StatelessWidget {
           style: TextStyle(fontSize: 20),
                 ),
              ),
-     );
-
+    );
   }
 }

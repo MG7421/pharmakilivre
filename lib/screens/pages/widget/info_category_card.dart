@@ -18,7 +18,7 @@ class InfoCategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 400,
-      height: 70,
+      height: 60,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),

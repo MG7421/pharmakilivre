@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:pharmakilivre/bloc/LoginBloc.dart';
-import 'package:pharmakilivre/screens/onboarding/onboarding_example.dart';
-import 'package:pharmakilivre/services/ApiLogin_service.dart';
+import 'package:pharmakilivre/constants.dart';
+import 'package:pharmakilivre/routes/global_route.dart';
+import 'package:pharmakilivre/routes/routes.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+import 'Screens/splash/splash_screen.dart';
+import 'bloc/LoginBloc.dart';
+import 'services/ApiLogin_service.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await RouteUtil.initSharedPreferences();
   runApp(const MyApp());
 }
 
@@ -13,23 +19,49 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String lastRoute = RouteUtil.getLastRoute();
+
     return MultiProvider(
       providers: [
         Provider<LoginBloc>(create: (_) => LoginBloc(apiService: ApiService())),
         // Other providers...
       ],
+
       child: MaterialApp(
-        title: 'Pharmakilivre',
+        title: 'The Flutter Way',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: Color(0xFF36AA05),
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+          scaffoldBackgroundColor: Colors.white,
+          primarySwatch: Colors.blue,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 48),
+              backgroundColor: AppColors.primaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+                side: BorderSide.none,
+              ),
+              elevation: 0,
+            ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            fillColor: const Color(0xFFFBFBFB),
+            filled: true,
+            border: defaultOutlineInputBorder,
+            enabledBorder: defaultOutlineInputBorder,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: const BorderSide(color: AppColors.primaryColor),
+            ),
+          ),
         ),
-
-        home: OnboardingExample(),
-      )
+        initialRoute: lastRoute,
+        routes: routes,
+      ),
     );
-
-
   }
 }
+
+
+
+

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/constants/constants.dart';
+import '../../../constants.dart';
+
 class NavigationBar extends StatelessWidget {
   const NavigationBar({super.key});
 

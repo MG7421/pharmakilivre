@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:pharmakilivre/config/constants/constants.dart';
 
+import '../constants.dart';
 import 'customClipper.dart';
 
 class BezierContainer extends StatelessWidget {

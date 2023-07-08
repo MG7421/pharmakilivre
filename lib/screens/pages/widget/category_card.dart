@@ -22,7 +22,7 @@ class CategoryCard extends StatelessWidget {
             BorderRadius.all(Radius.circular(30)
             ))),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
